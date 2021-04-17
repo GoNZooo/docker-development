@@ -1,0 +1,3 @@
+FROM gonz/quanterall-development
+
+RUN stack --resolver lts-16.31 install yesod-bin
