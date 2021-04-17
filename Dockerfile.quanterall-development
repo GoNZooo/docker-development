@@ -1,5 +1,5 @@
 FROM fpco/stack-build:lts-16.31
 
-RUN apt update && apt install -y inotify-tools
+RUN apt-get update && apt-get install -y inotify-tools
 RUN stack --resolver lts-16.31 install ormolu
 RUN stack --resolver lts-16.31 install hlint
