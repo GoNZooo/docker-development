@@ -1,3 +1,42 @@
 FROM gonz/quanterall-development:lts-16.31
 
 RUN stack --resolver lts-16.31 install yesod-bin
+RUN stack --resolver lts-16.31 build \
+  yesod \
+  yesod-core \
+  yesod-auth \
+  yesod-static \
+  yesod-form \
+  classy-prelude \
+  classy-prelude-conduit \
+  classy-prelude-yesod \
+  bytestring \
+  text \
+  persistent \
+  persistent-postgresql \
+  persistent-template \
+  template-haskell \
+  shakespeare \
+  hjsmin \
+  monad-control \
+  wai-extra \
+  yaml \
+  http-client-tls \
+  http-conduit \
+  directory \
+  warp \
+  data-default \
+  aeson \
+  conduit \
+  monad-logger \
+  fast-logger \
+  wai-logger \
+  file-embed \
+  safe \
+  unordered-containers \
+  containers \
+  vector \
+  time \
+  case-insensitive \
+  wai \
+  foreign-store
