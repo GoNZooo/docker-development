@@ -1,0 +1,4 @@
+FROM gonz/quanterall-development:lts-16.31
+
+RUN stack build --resolver lts-16.31 rio
+RUN stack build --resolver lts-16.31 aeson
