@@ -8,4 +8,8 @@ RUN stack --resolver lts-16.31 install hlint
 # For enabling pretty printing in GHCI
 RUN stack --resolver lts-16.31 build pretty-simple
 
+# hoogle coverage for all installed packages so far, supplement with more hoogle calls in dependents
+RUN stack --resolver lts-16.31 install hoogle
+RUN stack --resolver lts-16.31 hoogle -- generate
+
 COPY "./.ghci" "/root/.ghci"
