@@ -1,4 +1,5 @@
 :set -package pretty-simple
 :set -XOverloadedStrings
 :set -interactive-print=Text.Pretty.Simple.pPrint
-:def hoogle \x -> pure $ ":!hoogle " <> x
+import qualified Prelude
+:def hoogle \x -> Prelude.pure Prelude.$ ":!hoogle " Prelude.<> x
