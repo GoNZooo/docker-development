@@ -2,19 +2,19 @@
 
 name: Build LTS-16.31 Images
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs: 
+jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -33,13 +33,13 @@ jobs:
 
       - name: Build development image
         run: ./build-image.sh "16.31" "gonz/quanterall-development" ./Dockerfile.quanterall-development
-        
+
       - name: Build application development image
         run: ./build-image.sh "16.31" "gonz/quanterall-application-development" ./Dockerfile.quanterall-application-development
-        
+
       - name: Build web development image
         run: ./build-image.sh "16.31" "gonz/quanterall-web-development" ./Dockerfile.quanterall-web-development
-        
+
       - name: Push images
         run: |
           docker push gonz:quanterall-development:lts-16.31
