@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
+jobs: 
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
@@ -25,13 +25,26 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Build development image
-        run: chmod +x ./build-and-push-development-lts16.31.sh && ./build-and-push-development-lts16.31.sh
+      - name: Log into registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
+      - name: Set permissions
+        run: chmod +x ./build-image.sh
+
+      - name: Build development image
+        run: ./build-image.sh "16.31" "gonz/quanterall-development" ./Dockerfile.quanterall-development
+        
       - name: Build application development image
-        run: chmod +x ./build-and-push-application-development-lts16.31.sh && ./build-and-push-application-development-lts16.31.sh
+        run: ./build-image.sh "16.31" "gonz/quanterall-application-development" ./Dockerfile.quanterall-application-development
         
       - name: Build web development image
-        run: chmod +x ./build-and-push-web-development-lts16.31.sh && ./build-and-push-web-development-lts16.31.sh
-
+        run: ./build-image.sh "16.31" "gonz/quanterall-web-development" ./Dockerfile.quanterall-web-development
+        
+      - name: Push images
+        run: |
+          docker push gonz:quanterall-development:lts-16.31
+          docker push gonz:quanterall-development:latest
+          docker push gonz:quanterall-application-development:lts-16.31
+          docker push gonz:quanterall-application-development:latest
+          docker push gonz:quanterall-web-development:lts-16.31
+          docker push gonz:quanterall-web-development:latest
