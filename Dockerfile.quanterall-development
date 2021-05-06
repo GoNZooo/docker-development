@@ -2,7 +2,8 @@ FROM fpco/stack-build:lts-16.31
 
 # RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 # RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
-# RUN apt-get update && apt-get install -y inotify-tools postgresql-client-13
+RUN apt-get update
+# && apt-get install -y inotify-tools postgresql-client-13
 RUN stack --resolver lts-16.31 install ormolu
 RUN stack --resolver lts-16.31 install hlint
 # For enabling pretty printing in GHCI
