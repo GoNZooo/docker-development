@@ -1,16 +1,13 @@
 FROM fpco/stack-build:lts-16.31
 
-# RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-# RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
-RUN apt-get update
-# && apt-get install -y inotify-tools postgresql-client-13
-RUN stack --resolver lts-16.31 install ormolu
-RUN stack --resolver lts-16.31 install hlint
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B1DA6120C2BF624 && \
+  apt-get update -y && \
+  apt-get install -y postgresql-client-13
+RUN stack --resolver lts-16.31 install ormolu hlint hoogle
 # For enabling pretty printing in GHCI
 RUN stack --resolver lts-16.31 build pretty-simple
-
-# hoogle coverage for all installed packages so far, supplement with more hoogle calls in dependents
-RUN stack --resolver lts-16.31 install hoogle
-RUN stack --resolver lts-16.31 hoogle -- generate
+RUN hoogle generate
 
 COPY "./.ghci" "/root/.ghci"
