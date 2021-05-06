@@ -1,5 +1,3 @@
-#!/usr/bin/env sh
-
 if [ -z $1 ]; then
     echo "First argument needs to be LTS number."
     exit 1
@@ -21,11 +19,8 @@ DOCKERFILE="$3"
 IMAGE_NAME_WITH_SNAPSHOT="$IMAGE_NAME:$SNAPSHOT"
 LATEST_IMAGE_NAME="$IMAGE_NAME:latest"
 
-./build-image.sh $1 $2 $3
-
-if [ $? -eq 0 ]; then
-    docker push "$IMAGE_NAME_WITH_SNAPSHOT"
-    docker push "$LATEST_IMAGE_NAME"
-else
-    echo "Build failed, will not push new versions."
-fi
+echo "Building $IMAGE_NAME_WITH_SNAPSHOT and $LATEST_IMAGE_NAME from $DOCKERFILE"
+docker build -f "$DOCKERFILE" \
+  -t "$IMAGE_NAME_WITH_SNAPSHOT" \
+  -t "$LATEST_IMAGE_NAME" \
+  .
