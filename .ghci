@@ -3,3 +3,4 @@
 :set -interactive-print=Text.Pretty.Simple.pPrint
 import qualified Prelude
 :def hoogle \x -> Prelude.pure Prelude.$ ":!hoogle " Prelude.<> x
+:set prompt "Q> "
