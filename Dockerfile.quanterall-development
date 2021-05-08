@@ -5,6 +5,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg ma
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B1DA6120C2BF624 && \
   apt-get update -y && \
   apt-get install -y postgresql-client-13
+RUN stack upgrade
 RUN stack --resolver lts-16.31 install ormolu hlint hoogle
 # For enabling pretty printing in GHCI
 RUN stack --resolver lts-16.31 build pretty-simple
