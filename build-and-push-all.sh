@@ -5,7 +5,6 @@ if [ -z $1 ]; then
     exit 1
 fi
 LTS_VERSION="$1"
-SNAPSHOT="lts-$LTS_VERSION"
 
 ./build-and-push-development.sh $LTS_VERSION && \
   ./build-and-push-application-development.sh $LTS_VERSION && \
