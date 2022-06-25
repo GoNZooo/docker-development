@@ -1,0 +1,14 @@
+FROM fpco/stack-build:lts-18.28
+
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B1DA6120C2BF624 && \
+  apt-get update -y && \
+  apt-get install -y postgresql-client-13
+RUN stack upgrade
+RUN stack --resolver lts-18.28 install ormolu hlint hoogle
+# For enabling pretty printing in GHCI
+RUN stack --resolver lts-18.28 build pretty-simple
+RUN hoogle generate
+
+COPY "./.ghci" "/root/.ghci"
