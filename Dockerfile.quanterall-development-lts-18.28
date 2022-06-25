@@ -1,5 +1,7 @@
 FROM fpco/stack-build:lts-18.28
 
+RUN apt-get update -y
+RUN apt-get install lsb-release -y
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8B1DA6120C2BF624 && \
